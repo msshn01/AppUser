@@ -324,7 +324,7 @@ public class MainActivity extends AppCompatActivity  {
             startActivity(intent);
             finish();
         }else {
-            //Kayıtlı kullanıcı varsa
+            
         }
 
 
