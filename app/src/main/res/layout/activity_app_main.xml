@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4A4ECA"
+    tools:context=".activity.AppMainActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="160dp"
+        android:background="#E1EEEAEA"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteY="154dp">
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search"
+            android:onClick="onMarangoz"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout7">
+
+            <ImageView
+                android:id="@+id/imageTahta"
+                android:layout_width="63dp"
+                android:layout_height="55dp"
+                android:layout_margin="15dp"
+                app:srcCompat="@drawable/tahtausta"
+                tools:layout_editor_absoluteX="70dp"
+                tools:layout_editor_absoluteY="123dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="7dp"
+                android:text="Marangoz"
+                android:textSize="17dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/search"
+            android:onClick="onAsci"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.555"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout4">
+
+            <ImageView
+                android:id="@+id/imageBaker"
+                android:layout_width="63dp"
+                android:layout_height="55dp"
+                android:layout_margin="15dp"
+                app:srcCompat="@drawable/baker"
+                tools:layout_editor_absoluteX="70dp"
+                tools:layout_editor_absoluteY="123dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="7dp"
+                android:text="Aşçı"
+                android:textSize="17dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="88dp"
+            android:background="@drawable/search"
+            android:onClick="onElektrik"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/linearLayout3"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageElec"
+                android:layout_width="63dp"
+                android:layout_height="55dp"
+                android:layout_margin="15dp"
+                app:srcCompat="@drawable/elektrik"
+                tools:layout_editor_absoluteX="70dp"
+                tools:layout_editor_absoluteY="123dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="7dp"
+                android:text="Elektirci"
+                android:textSize="17dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/search"
+            android:onClick="onTaxi"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout7"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+
+            <ImageView
+                android:id="@+id/imageTaxi"
+                android:layout_width="63dp"
+                android:layout_height="55dp"
+                android:layout_margin="15dp"
+                app:srcCompat="@drawable/taxi"
+                tools:layout_editor_absoluteX="70dp"
+                tools:layout_editor_absoluteY="123dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="7dp"
+                android:text="Taksi"
+                android:textSize="17dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search"
+            android:onClick="onTemizlikci"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout4"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout2">
+
+            <ImageView
+                android:id="@+id/imageClear"
+                android:layout_width="63dp"
+                android:layout_height="55dp"
+                android:layout_margin="15dp"
+                app:srcCompat="@drawable/temizlik"
+                tools:layout_editor_absoluteX="70dp"
+                tools:layout_editor_absoluteY="123dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="7dp"
+                android:text="Temizlikci"
+                android:textSize="17dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/search"
+            android:onClick="onBerber"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout8"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout8">
+
+            <ImageView
+                android:id="@+id/imageHairstyle"
+                android:layout_width="63dp"
+                android:layout_height="55dp"
+                android:layout_margin="15dp"
+                app:srcCompat="@drawable/hairstyle"
+                tools:layout_editor_absoluteX="70dp"
+                tools:layout_editor_absoluteY="123dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="7dp"
+                android:text="Berber"
+                android:textSize="17dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/search"
+            android:onClick="onTamirci"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout3"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout3">
+
+            <ImageView
+                android:id="@+id/imageTamir"
+                android:layout_width="61dp"
+                android:layout_height="60dp"
+                android:layout_margin="15dp"
+                app:srcCompat="@drawable/tamir"
+                tools:layout_editor_absoluteX="70dp"
+                tools:layout_editor_absoluteY="123dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="7dp"
+                android:text="Tamirci"
+                android:textSize="17dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="#00FFFFFF"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout6"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout10">
+
+            <ImageView
+                android:id="@+id/imageMore"
+                android:layout_width="63dp"
+                android:layout_height="55dp"
+                android:layout_margin="15dp"
+                android:onClick="searchGo"
+                app:srcCompat="@drawable/more"
+                tools:layout_editor_absoluteX="70dp"
+                tools:layout_editor_absoluteY="123dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search"
+            android:onClick="onOgretmen"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout5">
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="63dp"
+                android:layout_height="55dp"
+                android:layout_margin="15dp"
+                app:srcCompat="@drawable/teaching"
+                tools:layout_editor_absoluteX="70dp"
+                tools:layout_editor_absoluteY="123dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="7dp"
+                android:text="Öğretmen"
+                android:textSize="17dp"
+                android:textStyle="bold">
+
+            </TextView>
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="33dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="32dp"
+        android:onClick="goMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/menu" />
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="306dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/search"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Enter you are need"
+        android:inputType="text"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

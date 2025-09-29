@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    android:background="@drawable/bck_rcycler"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="center_vertical">
+
+        <!-- Profil Fotoğrafı -->
+        <ImageView
+            android:id="@+id/imgProfile"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/profile2"
+            android:contentDescription="Profile Picture"
+            android:scaleType="centerCrop"
+            />
+
+        <!-- Bilgiler -->
+        <LinearLayout
+            android:paddingLeft="7dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ad Soyad"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/txtJob"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="İş Pozisyonu"
+                android:textSize="14sp"
+                android:textColor="#666666" />
+
+            <TextView
+                android:id="@+id/txtScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Score: 85"
+                android:textSize="13sp"
+                android:textColor="#444444" />
+        </LinearLayout>
+
+        <!-- Detay ikon -->
+        <ImageView
+            android:id="@+id/imgArrow"
+            android:layout_width="50dp"
+            android:layout_height="37dp"
+            android:contentDescription="Detail Icon"
+            app:srcCompat="@drawable/next" />
+    </LinearLayout>
+
+</LinearLayout>

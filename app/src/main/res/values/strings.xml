@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AppUser</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="htiya_lar_n_za_uygun_do_ru_hizmeti_bulun_e_itli_se_eneklerle_kolayca_parmaklar_n_z_n_ucunda_mevcuttur">İhtiyaçlarınıza uygun doğru hizmeti bulun çeşitli seçeneklerle kolayca parmaklarınızın ucunda mevcuttur.</string>
+    <string name="choose_a_service">Choose a service</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="_9_2">9,2</string>
+</resources>
