@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -12,42 +12,29 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.appuser.DataApp;
 import com.example.appuser.R;
-import com.example.appuser.VeriTutucu;
+
 import com.example.appuser.databinding.ActivityMainBinding;
 import com.example.appuser.fragment.NewLoginFragment1;
 import com.example.appuser.fragment.NewLoginFragment2;
 import com.example.appuser.fragment.NewLoginFragment3;
 import com.example.appuser.model.Employer;
-import com.example.appuser.model.UserProfile;
+
 import com.example.appuser.model.Users;
 import com.example.appuser.model.Worker;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+
 
 import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Objects;
+
 
 public class MainActivity extends AppCompatActivity  {
     private ActivityMainBinding binding;
     ArrayList<Fragment> fragments = new ArrayList<>();
     int i = 1;
     Worker selectUser;
-    ArrayList<UserProfile> userProfiles = new ArrayList<>();
     ArrayList<Users> arrayListUsers ;
     ArrayList<Worker> workerArrayList ;
     ArrayList<Employer> employerArrayList ;
-//    private FirebaseAuth mAuth;
-    FirebaseFirestore firebaseFirestore;
-    DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
