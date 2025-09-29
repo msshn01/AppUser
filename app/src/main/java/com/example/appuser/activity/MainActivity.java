@@ -329,7 +329,7 @@ public class MainActivity extends AppCompatActivity  {
 
 
     }
-
+    //58888888888888888888888888888888888888888888888888888
     public void nextFunc(View view){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
