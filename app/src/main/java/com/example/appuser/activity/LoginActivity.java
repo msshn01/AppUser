@@ -32,11 +32,19 @@ public class LoginActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
         mAuth = FirebaseAuth.getInstance();
+        if (mAuth.getCurrentUser() != null){
+            Intent intent = new Intent(binding.getRoot().getContext(),AppMainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+            VeriTutucu.getInstance().setKullanici(new Users(mAuth.getCurrentUser().getEmail(),"0"));
+        }
     }
 
 
     public void enterLogin(View view){
         //kayıt arama yoksa hesap oluşturma firebase
+
         String email = binding.emailText.getText().toString();
         String password = binding.paswoardText.getText().toString();
 
@@ -58,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 VeriTutucu.getInstance().setKullanici(new Users(user.getEmail(),"0"));
                                 Intent intent = new Intent(binding.getRoot().getContext(),AppMainActivity.class);
-                                System.out.println("kayıtlı kullanıcı girişi yapıldı");
+                                System.out.println("kayıtlı kullanıcı girişi yapıldı: " + user.getEmail());
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 finish();
@@ -83,7 +91,8 @@ public class LoginActivity extends AppCompatActivity {
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         startActivity(intent);
                                         finish();
-                                        System.out.println("Kullanıcı oluşturuldu");
+                                        System.out.println("Kullanıcı oluşturuldu : " + userNew.getEmail());
+                                        VeriTutucu.getInstance().setKullanici(new Users(userNew.getEmail(),"0"));
                                     }else{
                                         System.out.println(Objects.requireNonNull(task.getException()).toString());
                                     }

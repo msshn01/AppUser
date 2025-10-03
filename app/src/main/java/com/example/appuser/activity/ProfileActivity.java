@@ -30,15 +30,9 @@ public class ProfileActivity extends AppCompatActivity {
         binding = ActivityProfileBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
         selectUser = VeriTutucu.getInstance().getKullanici();
 
-
-
-        binding.userName.setText(selectUser.getUserName());
         binding.userEmail.setText(selectUser.getEmail());
-        binding.userNumber.setText(selectUser.getPhoneNumber());
-
 
     }
 

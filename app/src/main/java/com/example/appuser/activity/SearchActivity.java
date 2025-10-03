@@ -17,6 +17,7 @@ import com.example.appuser.DataApp;
 import com.example.appuser.R;
 import com.example.appuser.databinding.ActivityMenuBinding;
 import com.example.appuser.databinding.ActivitySearchBinding;
+import com.example.appuser.model.UserProfile;
 import com.example.appuser.model.Worker;
 
 import java.util.ArrayList;
@@ -38,14 +39,14 @@ public class SearchActivity extends AppCompatActivity {
         String na = intent.getStringExtra("search");
         System.out.println(na);
         if (na == null){
-            Adapter adapter = new Adapter(DataApp.getInstance().getWorkerArrayList());
+            Adapter adapter = new Adapter(DataApp.getInstance().getUsersArrayList());
             recyclerView.setAdapter(adapter);
         }else{
-            ArrayList<Worker> searchList = new ArrayList<>();
+            ArrayList<UserProfile> searchList = new ArrayList<>();
 
-            for (int i = 0; i < DataApp.getInstance().getWorkerArrayList().size(); i++) {
-                if (DataApp.getInstance().getWorkerArrayList().get(i).getJob().toLowerCase().contains(na.toLowerCase())){
-                    searchList.add(DataApp.getInstance().getWorkerArrayList().get(i));
+            for (int i = 0; i < DataApp.getInstance().getUsersArrayList().size(); i++) {
+                if (DataApp.getInstance().getUsersArrayList().get(i).getField().toLowerCase().contains(na.toLowerCase())){
+                    searchList.add(DataApp.getInstance().getUsersArrayList().get(i));
                 }
 
             }

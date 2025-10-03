@@ -101,12 +101,11 @@
             android:id="@+id/userNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="+90505 447 ** ** "
             android:layout_gravity="center"
+            android:layout_weight="1"
             android:gravity="center"
-            android:textSize="18dp"
-            />
+            android:text="Telefon numaranızı "
+            android:textSize="18dp" />
 
         <ImageView
             android:id="@+id/imageView17"
@@ -187,11 +186,11 @@
             android:id="@+id/userName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Musa Şahan"
             android:layout_gravity="center"
-            android:textSize="20dp"
-            android:gravity="center" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="İsminiz"
+            android:textSize="20dp" />
 
         <ImageView
             android:id="@+id/imageView15"

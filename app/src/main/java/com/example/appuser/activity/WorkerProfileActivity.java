@@ -10,11 +10,12 @@ import com.example.appuser.DataApp;
 import com.example.appuser.VeriTutucu;
 import com.example.appuser.databinding.ActivitySearchBinding;
 import com.example.appuser.databinding.ActivityWorkerProfileBinding;
+import com.example.appuser.model.UserProfile;
 import com.example.appuser.model.Users;
 
 public class WorkerProfileActivity extends AppCompatActivity {
     private ActivityWorkerProfileBinding binding;
-    Users selectUser;
+    UserProfile selectUser;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -28,9 +29,9 @@ public class WorkerProfileActivity extends AppCompatActivity {
         selectUser = DataApp.getInstance().getSendUser();
 
 
-        binding.userName.setText(selectUser.getUserName());
+        binding.userName.setText(selectUser.getName());
         binding.userEmail.setText(selectUser.getEmail());
-        binding.userNumber.setText(selectUser.getPhoneNumber());
+        binding.userNumber.setText(selectUser.getNumber());
         binding.textPoint.setText("Memnuniyet: " + selectUser.getPoint());
 
     }

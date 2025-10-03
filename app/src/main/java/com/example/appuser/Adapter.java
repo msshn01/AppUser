@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appuser.activity.ProfileActivity;
 import com.example.appuser.activity.WorkerProfileActivity;
 import com.example.appuser.databinding.RecyclerRowBinding;
+import com.example.appuser.model.UserProfile;
 import com.example.appuser.model.Users;
 import com.example.appuser.model.Worker;
 
@@ -20,9 +21,9 @@ import java.util.ArrayList;
 
 
 public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
-    private ArrayList<Worker> arrayList;
+    private final ArrayList<UserProfile> arrayList;
 
-    public Adapter(ArrayList<Worker> arrayList) {
+    public Adapter(ArrayList<UserProfile> arrayList) {
         this.arrayList = arrayList;
     }
 
@@ -36,9 +37,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Holder holder, @SuppressLint("RecyclerView") int position) {
-        holder.recyclerRowBinding.txtName.setText(arrayList.get(position).getUserName().substring(0, 1).toUpperCase() + arrayList.get(position).getUserName().substring(1).toLowerCase());
+        holder.recyclerRowBinding.txtName.setText(arrayList.get(position).getName().substring(0, 1).toUpperCase() + arrayList.get(position).getSurname().substring(1).toLowerCase());
         holder.recyclerRowBinding.txtScore.setText("Score: 85");
-        holder.recyclerRowBinding.txtJob.setText(arrayList.get(position).getJob().substring(0, 1).toUpperCase() + arrayList.get(position).getJob().substring(1).toLowerCase());
+        holder.recyclerRowBinding.txtJob.setText(arrayList.get(position).getField().substring(0, 1).toUpperCase() + arrayList.get(position).getField().substring(1).toLowerCase());
 
 
         holder.recyclerRowBinding.imgArrow.setOnClickListener(new View.OnClickListener() {

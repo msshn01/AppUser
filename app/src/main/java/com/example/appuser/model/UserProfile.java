@@ -1,5 +1,7 @@
 package com.example.appuser.model;
 
+import java.util.Random;
+
 public class UserProfile {
     String name;
     String surname;
@@ -8,10 +10,27 @@ public class UserProfile {
     String number;
     String id;
     String field;
+    Random random = new Random();
 
-    public UserProfile(String name, String surname, String email, String password, String number) {
+    public String getPoint() {
+        return point;
+    }
+
+    public void setPoint(String point) {
+        this.point = point;
+    }
+
+    String point ;
+    public UserProfile(String name, String surname, String email, String password, String number, String field,String point) {
+        this.name = name;
+        this.surname = surname;
         this.email = email;
         this.password = password;
+        this.number = number;
+        this.field = field;
+        this.point = point;
+        int say = 10000 + random.nextInt(90000);
+        id = name + surname + String.valueOf(say);
     }
 
     public String getSurname() {
@@ -63,7 +82,12 @@ public class UserProfile {
     }
 
     public String getField() {
-        return field;
+        if (field == null){
+            return "Kullanıcı";
+        }else{
+            return field;
+        }
+
     }
 
     public void setField(String field) {

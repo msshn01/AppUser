@@ -1,10 +1,19 @@
 package com.example.appuser.activity;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 
+import androidx.activity.ComponentActivity;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -19,22 +28,36 @@ import com.example.appuser.fragment.NewLoginFragment2;
 import com.example.appuser.fragment.NewLoginFragment3;
 import com.example.appuser.model.Employer;
 
+import com.example.appuser.model.UserProfile;
 import com.example.appuser.model.Users;
 import com.example.appuser.model.Worker;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity  {
     private ActivityMainBinding binding;
     ArrayList<Fragment> fragments = new ArrayList<>();
     int i = 1;
-    Worker selectUser;
-    ArrayList<Users> arrayListUsers ;
-    ArrayList<Worker> workerArrayList ;
-    ArrayList<Employer> employerArrayList ;
-
+    ArrayList<UserProfile> arrayListUsers = new ArrayList<>();
+    FirebaseFirestore db ;
+    Boolean touch = true;
+    FirebaseUser user;
+    FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,15 +70,39 @@ public class MainActivity extends AppCompatActivity  {
         fragments.add(new NewLoginFragment2());
         fragments.add(new NewLoginFragment3());
 
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+        user = auth.getCurrentUser();
 
-
-
-
-
-        selectUser = null;
 
 
         callData();
+//
+//        for (UserProfile u : arrayListUsers) {
+//            HashMap<String,Object> hashMap = new HashMap<>();
+//            hashMap.put("name", u.getName());
+//            hashMap.put("surname", u.getSurname());
+//            hashMap.put("email", u.getEmail());
+//            hashMap.put("password", u.getPassword());
+//            hashMap.put("number", u.getNumber());
+//            hashMap.put("id",u.getId());
+//            hashMap.put("field",u.getField());
+//            hashMap.put("point",u.getPoint());
+//            db.collection("users").add(hashMap).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                @Override
+//                public void onSuccess(DocumentReference documentReference) {
+//                    System.out.println("Db yazımı tamamlandı");
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    System.out.println("Db yazımı tamamlanamadı!!!! " + u.getId());
+//                }
+//            });
+//
+//        }
+
+
 
 //        if (selectUser != null){
 //            VeriTutucu.getInstance().setKullanici(selectUser);
@@ -69,231 +116,145 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (touch) {
+            // dokunmayı engelle
+            return true;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 
 
 
     public void callData(){
-        arrayListUsers = new ArrayList<>();
-        workerArrayList = new ArrayList<>();
-        employerArrayList = new ArrayList<>();
-        // --- Users ---
-        arrayListUsers.add(new Users("user1@example.com", "pass123"));
-        arrayListUsers.add(new Users("user2@example.com", "abc456"));
-        arrayListUsers.add(new Users("user3@example.com", "qwe789"));
-        arrayListUsers.add(new Users("user4@example.com", "zxc321"));
-        arrayListUsers.add(new Users("user5@example.com", "pass999"));
-        arrayListUsers.add(new Users("user6@example.com", "login321"));
-        arrayListUsers.add(new Users("user7@example.com", "secret456"));
-        arrayListUsers.add(new Users("user8@example.com", "mypwd789"));
-        arrayListUsers.add(new Users("user9@example.com", "test1234"));
-        arrayListUsers.add(new Users("user10@example.com", "hello321"));
-// --- Workers ---
-        Worker worker1 = new Worker("worker1@example.com", "wpass1", "boyacı");
-        worker1.setUserName("MehmetYıldız");
-        worker1.setPoint("9.2");
-
-        Worker worker2 = new Worker("worker2@example.com", "wpass2", "tesisatçı");
-        worker2.setUserName("AyşeKara");
-        worker2.setPoint("8.7");
-
-        Worker worker3 = new Worker("worker3@example.com", "wpass3", "elektrikçi");
-        worker3.setUserName("AliDemir");
-        worker3.setPoint("7.5");
-
-        Worker worker4 = new Worker("worker4@example.com", "wpass4", "marangoz");
-        worker4.setUserName("ZeynepGüneş");
-        worker4.setPoint("9.0");
-
-        Worker worker5 = new Worker("worker5@example.com", "wpass5", "mekanikçi");
-        worker5.setUserName("BurakKurt");
-        worker5.setPoint("8.3");
-
-        Worker worker6 = new Worker("worker6@example.com", "wpass6", "kaynakçı");
-        worker6.setUserName("ElifAslan");
-        worker6.setPoint("7.8");
-
-        Worker worker7 = new Worker("worker7@example.com", "wpass7", "inşaatçı");
-        worker7.setUserName("CanÖztürk");
-        worker7.setPoint("8.5");
-
-        Worker worker8 = new Worker("worker8@example.com", "wpass8", "şoför");
-        worker8.setUserName("FatmaYalçın");
-        worker8.setPoint("9.1");
-
-        Worker worker9 = new Worker("worker9@example.com", "wpass9", "teknisyen");
-        worker9.setUserName("MertDoğan");
-        worker9.setPoint("7.9");
-
-        Worker worker10 = new Worker("worker10@example.com", "wpass10", "çatı ustası");
-        worker10.setUserName("EceŞahin");
-        worker10.setPoint("8.0");
-
-// 20 yeni worker daha
-
-        Worker worker11 = new Worker("worker11@example.com", "wpass11", "tesisatçı");
-        worker11.setUserName("AhmetKoç");
-        worker11.setPoint("8.6");
-
-        Worker worker12 = new Worker("worker12@example.com", "wpass12", "boyacı");
-        worker12.setUserName("SelinÇelik");
-        worker12.setPoint("7.4");
-
-        Worker worker13 = new Worker("worker13@example.com", "wpass13", "elektrikçi");
-        worker13.setUserName("HakanEr");
-        worker13.setPoint("9.1");
-
-        Worker worker14 = new Worker("worker14@example.com", "wpass14", "boyacı");
-        worker14.setUserName("GizemUslu");
-        worker14.setPoint("8.2");
-
-        Worker worker15 = new Worker("worker15@example.com", "wpass15", "marangoz");
-        worker15.setUserName("KemalBozkurt");
-        worker15.setPoint("7.7");
-
-        Worker worker16 = new Worker("worker16@example.com", "wpass16", "tesisatçı");
-        worker16.setUserName("YaseminAydın");
-        worker16.setPoint("8.9");
-
-        Worker worker17 = new Worker("worker17@example.com", "wpass17", "mekanikçi");
-        worker17.setUserName("SerkanYıldız");
-        worker17.setPoint("7.3");
-
-        Worker worker18 = new Worker("worker18@example.com", "wpass18", "boyacı");
-        worker18.setUserName("CemAksoy");
-        worker18.setPoint("9.0");
-
-        Worker worker19 = new Worker("worker19@example.com", "wpass19", "kaynakçı");
-        worker19.setUserName("MelisaTuna");
-        worker19.setPoint("7.6");
-
-        Worker worker20 = new Worker("worker20@example.com", "wpass20", "şoför");
-        worker20.setUserName("TanerYavuz");
-        worker20.setPoint("8.1");
-
-        Worker worker21 = new Worker("worker21@example.com", "wpass21", "elektrikçi");
-        worker21.setUserName("SevgiTopal");
-        worker21.setPoint("9.3");
-
-        Worker worker22 = new Worker("worker22@example.com", "wpass22", "mekanikçi");
-        worker22.setUserName("KoraySönmez");
-        worker22.setPoint("8.2");
-
-        Worker worker23 = new Worker("worker23@example.com", "wpass23", "inşaatçı");
-        worker23.setUserName("BetülAkın");
-        worker23.setPoint("7.8");
-
-        Worker worker24 = new Worker("worker24@example.com", "wpass24", "çatı ustası");
-        worker24.setUserName("UfukDikmen");
-        worker24.setPoint("9.4");
-
-        Worker worker25 = new Worker("worker25@example.com", "wpass25", "teknisyen");
-        worker25.setUserName("DeryaKar");
-        worker25.setPoint("8.3");
-
-        Worker worker26 = new Worker("worker26@example.com", "wpass26", "boyacı");
-        worker26.setUserName("OnurAltun");
-        worker26.setPoint("9.5");
-
-        Worker worker27 = new Worker("worker27@example.com", "wpass27", "tesisatçı");
-        worker27.setUserName("İlaydaKurt");
-        worker27.setPoint("7.9");
-
-        Worker worker28 = new Worker("worker28@example.com", "wpass28", "elektrikçi");
-        worker28.setUserName("TolgaUçar");
-        worker28.setPoint("8.7");
-
-        Worker worker29 = new Worker("worker29@example.com", "wpass29", "marangoz");
-        worker29.setUserName("NazlıDemirtaş");
-        worker29.setPoint("7.6");
-
-        Worker worker30 = new Worker("worker30@example.com", "wpass30", "boyacı");
-        worker30.setUserName("ErhanBal");
-        worker30.setPoint("9.1");
 
 
-        worker1.setPhoneNumber("5540123456");
-        worker2.setPhoneNumber("5309876543");
-        worker3.setPhoneNumber("5321234567");
-        worker4.setPhoneNumber("5537654321");
-        worker5.setPhoneNumber("5052345678");
-        worker6.setPhoneNumber("5456789012");
-        worker7.setPhoneNumber("5073456789");
-        worker8.setPhoneNumber("5314567890");
-        worker9.setPhoneNumber("5591231234");
-        worker10.setPhoneNumber("5386543210");
-
-        worker11.setPhoneNumber("5347891234");
-        worker12.setPhoneNumber("5523216549");
-        worker13.setPhoneNumber("5397418529");
-        worker14.setPhoneNumber("5449638527");
-        worker15.setPhoneNumber("5011597538");
-        worker16.setPhoneNumber("5572583691");
-        worker17.setPhoneNumber("5063571594");
-        worker18.setPhoneNumber("5374569512");
-        worker19.setPhoneNumber("5047531598");
-        worker20.setPhoneNumber("5328527419");
-
-        worker21.setPhoneNumber("5367412583");
-        worker22.setPhoneNumber("5483691475");
-        worker23.setPhoneNumber("5107894561");
-        worker24.setPhoneNumber("5561594872");
-        worker25.setPhoneNumber("5359517536");
-        worker26.setPhoneNumber("5501239874");
-        worker27.setPhoneNumber("5334563217");
-        worker28.setPhoneNumber("5478529630");
-        worker29.setPhoneNumber("5491592638");
-        worker30.setPhoneNumber("5437896541");
+        FrameLayout loadingOverlay = findViewById(R.id.loadingOverlay);
 
 
-// Listeye ekleme
-        workerArrayList.add(worker1);
-        workerArrayList.add(worker2);
-        workerArrayList.add(worker3);
-        workerArrayList.add(worker4);
-        workerArrayList.add(worker5);
-        workerArrayList.add(worker6);
-        workerArrayList.add(worker7);
-        workerArrayList.add(worker8);
-        workerArrayList.add(worker9);
-        workerArrayList.add(worker10);
-        workerArrayList.add(worker11);
-        workerArrayList.add(worker12);
-        workerArrayList.add(worker13);
-        workerArrayList.add(worker14);
-        workerArrayList.add(worker15);
-        workerArrayList.add(worker16);
-        workerArrayList.add(worker17);
-        workerArrayList.add(worker18);
-        workerArrayList.add(worker19);
-        workerArrayList.add(worker20);
-        workerArrayList.add(worker21);
-        workerArrayList.add(worker22);
-        workerArrayList.add(worker23);
-        workerArrayList.add(worker24);
-        workerArrayList.add(worker25);
-        workerArrayList.add(worker26);
-        workerArrayList.add(worker27);
-        workerArrayList.add(worker28);
-        workerArrayList.add(worker29);
-        workerArrayList.add(worker30);
-
-// --- Employers ---
-        employerArrayList.add(new Employer("employer1@example.com", "epass1", "05070010001"));
-        employerArrayList.add(new Employer("employer2@example.com", "epass2", "05070010002"));
-        employerArrayList.add(new Employer("employer3@example.com", "epass3", "05070010003"));
-        employerArrayList.add(new Employer("employer4@example.com", "epass4", "05070010004"));
-        employerArrayList.add(new Employer("employer5@example.com", "epass5", "05070010005"));
-        employerArrayList.add(new Employer("employer6@example.com", "epass6", "05070010006"));
-        employerArrayList.add(new Employer("employer7@example.com", "epass7", "05070010007"));
-        employerArrayList.add(new Employer("employer8@example.com", "epass8", "05070010008"));
-        employerArrayList.add(new Employer("employer9@example.com", "epass9", "05070010009"));
-        employerArrayList.add(new Employer("employer10@example.com", "epass10", "05070010010"));
+        loadingOverlay.setVisibility(View.VISIBLE);
 
 
-        DataApp.getInstance().setEmployerArrayList(employerArrayList);
-        DataApp.getInstance().setUsersArrayList(arrayListUsers);
-        DataApp.getInstance().setWorkerArrayList(workerArrayList);
+        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String name = Objects.requireNonNull(document.getData().get("name")).toString();
+                        String surname = Objects.requireNonNull(document.getData().get("surname")).toString();
+                        String email = Objects.requireNonNull(document.getData().get("email")).toString();
+                        String password = Objects.requireNonNull(document.getData().get("password")).toString();
+                        String number = Objects.requireNonNull(document.getData().get("number")).toString();
+                        String field = Objects.requireNonNull(document.getData().get("field")).toString();
+                        String id = Objects.requireNonNull(document.getData().get("id")).toString();
+                        String point = Objects.requireNonNull(document.getData().get("point")).toString();
+                        UserProfile userProfile = new UserProfile(name,surname,email,password,number,field,point);
+                        arrayListUsers.add(userProfile);
+                    }
 
+                    DataApp.getInstance().setUsersArrayList(arrayListUsers);
+                    System.out.println("Veri çekildi listeye yazıldı");
+                    System.out.println("Dokunmatik açıldı");
+                    touch = false;
+                    loadingOverlay.setVisibility(View.GONE);
+
+                    if (user != null){
+                        skip(binding.getRoot());
+                    }
+                }
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//        arrayListUsers.add(new UserProfile("Musa","Şahan","musa.sahan@gmail.com","000000","5540108683","Sıvacı","7"));
+//        arrayListUsers.add(new UserProfile("Ahmet","Demir","ahmet.demir@gmail.com","123456","5321234567","Boyacı","3"));
+//        arrayListUsers.add(new UserProfile("Ayşe","Kaya","ayse.kaya@gmail.com","654321","5307654321","Özel Ders Öğretmeni","10"));
+//        arrayListUsers.add(new UserProfile("Mehmet","Çelik","mehmet.celik@gmail.com","987654","5559876543","Tesisatçı","2"));
+//        arrayListUsers.add(new UserProfile("Fatma","Yılmaz","fatma.yilmaz@gmail.com","456789","5344567890","Temizlikçi","9"));
+//        arrayListUsers.add(new UserProfile("Elif","Aydın","elif.aydin@gmail.com","111222","5369876543","Elektrikçi","4"));
+//        arrayListUsers.add(new UserProfile("Can","Koç","can.koc@gmail.com","222333","5377654321","Marangoz","1"));
+//        arrayListUsers.add(new UserProfile("Zeynep","Arslan","zeynep.arslan@gmail.com","333444","5383456789","Kuaför","6"));
+//        arrayListUsers.add(new UserProfile("Efe","Polat","efe.polat@gmail.com","444555","5391239876","Tamirci","5"));
+//        arrayListUsers.add(new UserProfile("Selin","Taş","selin.tas@gmail.com","555666","5306789123","Aşçı","8"));
+//
+//        arrayListUsers.add(new UserProfile("Burak","Şimşek","burak.simsek@gmail.com","666777","5312345678","Garson","2"));
+//        arrayListUsers.add(new UserProfile("Hakan","Öztürk","hakan.ozturk@gmail.com","777888","5328765432","Kaynakçı","7"));
+//        arrayListUsers.add(new UserProfile("Gamze","Kurt","gamze.kurt@gmail.com","888999","5337654321","Çilingir","9"));
+//        arrayListUsers.add(new UserProfile("Kerem","Sevgi","kerem.sevgi@gmail.com","999000","5348761234","Bahçıvan","1"));
+//        arrayListUsers.add(new UserProfile("Deniz","Yalçın","deniz.yalcin@gmail.com","121212","5356547890","Güvenlik Görevlisi","0"));
+//        arrayListUsers.add(new UserProfile("Ceren","Bal","ceren.bal@gmail.com","232323","5369871234","Nakliyeci","3"));
+//        arrayListUsers.add(new UserProfile("Mert","Ergin","mert.ergin@gmail.com","343434","5374567891","Mobilyacı","10"));
+//        arrayListUsers.add(new UserProfile("Aslı","Doğan","asli.dogan@gmail.com","454545","5386543210","Usta","6"));
+//        arrayListUsers.add(new UserProfile("Onur","Başar","onur.basar@gmail.com","565656","5397894561","İnşaat İşçisi","4"));
+//        arrayListUsers.add(new UserProfile("Pelin","Kara","pelin.kara@gmail.com","676767","5301122334","Boya Ustası","8"));
+//
+//        arrayListUsers.add(new UserProfile("Serkan","Uçar","serkan.ucar@gmail.com","787878","5319988776","Parke Döşemeci","2"));
+//        arrayListUsers.add(new UserProfile("Yasemin","Çınar","yasemin.cinar@gmail.com","898989","5324455667","Temizlik Görevlisi","7"));
+//        arrayListUsers.add(new UserProfile("Emre","Altun","emre.altun@gmail.com","909090","5333344556","Camcı","9"));
+//        arrayListUsers.add(new UserProfile("Hande","Karaaslan","hande.karaaslan@gmail.com","112233","5342233445","Klima Servisi","1"));
+//        arrayListUsers.add(new UserProfile("Tolga","Yıldırım","tolga.yildirim@gmail.com","223344","5351122334","Halı Yıkamacı","0"));
+//        arrayListUsers.add(new UserProfile("Seda","Güneş","seda.gunes@gmail.com","334455","5369988776","Dikiş Ustası","3"));
+//        arrayListUsers.add(new UserProfile("Barış","Eren","baris.eren@gmail.com","445566","5378877665","Mobilya Tamircisi","5"));
+//        arrayListUsers.add(new UserProfile("Melis","Acar","melis.acar@gmail.com","556677","5387766554","Çatı Ustası","6"));
+//        arrayListUsers.add(new UserProfile("Furkan","Bozkurt","furkan.bozkurt@gmail.com","667788","5396655443","Bahçe Düzenleyici","8"));
+//        arrayListUsers.add(new UserProfile("Sinem","Türkmen","sinem.turkmen@gmail.com","778899","5305544332","Boyacı Ustası","4"));
+//
+//        arrayListUsers.add(new UserProfile("Kaan","Orhan","kaan.orhan@gmail.com","889900","5314433221","Asansör Bakımcısı","10"));
+//        arrayListUsers.add(new UserProfile("Büşra","Çetin","busra.cetin@gmail.com","990011","5323322110","CNC Operatörü","2"));
+//        arrayListUsers.add(new UserProfile("Okan","Aksoy","okan.aksoy@gmail.com","101010","5332211009","Kaynak Ustası","9"));
+//        arrayListUsers.add(new UserProfile("Nazlı","Ersoy","nazli.ersoy@gmail.com","202020","5341100998","Su Tesisatçısı","3"));
+//        arrayListUsers.add(new UserProfile("Alper","Özkan","alper.ozkan@gmail.com","303030","5350099887","Doğalgaz Ustası","7"));
+//        arrayListUsers.add(new UserProfile("Derya","Tekin","derya.tekin@gmail.com","404040","5369988775","Alçıpan Ustası","1"));
+//        arrayListUsers.add(new UserProfile("Gökhan","Ekinci","gokhan.ekinci@gmail.com","505050","5378877664","Duvar Ustası","5"));
+//        arrayListUsers.add(new UserProfile("Sevgi","Ulu","sevgi.ulu@gmail.com","606060","5387766553","Fayans Döşeyici","6"));
+//        arrayListUsers.add(new UserProfile("Levent","Çolak","levent.colak@gmail.com","707070","5396655442","PVC Ustası","8"));
+//        arrayListUsers.add(new UserProfile("Özlem","Sağlam","ozlem.saglam@gmail.com","808080","5305544331","Elektrikçi","0"));
+//
+//        arrayListUsers.add(new UserProfile("İsmail","Tunç","ismail.tunc@gmail.com","909191","5314433220","Kombi Servisi","2"));
+//        arrayListUsers.add(new UserProfile("Mine","Başaran","mine.basaran@gmail.com","121314","5323322109","Mobilya Montajcısı","9"));
+//        arrayListUsers.add(new UserProfile("Cihan","Toprak","cihan.toprak@gmail.com","141516","5332211008","Mutfak Dolapçısı","3"));
+//        arrayListUsers.add(new UserProfile("Ezgi","Özer","ezgi.ozer@gmail.com","171819","5341100997","Perdeci","7"));
+//        arrayListUsers.add(new UserProfile("Umut","Saçlı","umut.sacli@gmail.com","202122","5350099886","Demir Doğramacı","1"));
+//        arrayListUsers.add(new UserProfile("Selma","Akın","selma.akin@gmail.com","232425","5369988774","Boyacı","4"));
+//        arrayListUsers.add(new UserProfile("Koray","Erbil","koray.erbil@gmail.com","262728","5378877663","Sıhhi Tesisatçı","6"));
+//        arrayListUsers.add(new UserProfile("Şule","Çakır","sule.cakir@gmail.com","292931","5387766552","Duvar Kağıdı Döşeyici","0"));
+//        arrayListUsers.add(new UserProfile("Harun","Yavuz","harun.yavuz@gmail.com","323334","5396655441","Parke Ustası","5"));
+//        arrayListUsers.add(new UserProfile("Betül","Korkmaz","betul.korkmaz@gmail.com","353637","5306677889","Temizlikçi","8"));
+//        arrayListUsers.add(new UserProfile("Arda","Keskin","arda.keskin@gmail.com","141414","5301112233","null","null"));
+//        arrayListUsers.add(new UserProfile("Nil","Özdemir","nil.ozdemir@gmail.com","151515","5312223344","null","null"));
+//        arrayListUsers.add(new UserProfile("Tuna","Boz","tuna.boz@gmail.com","161616","5323334455","null","null"));
+//        arrayListUsers.add(new UserProfile("Ceyda","Bulut","ceyda.bulut@gmail.com","171717","5334445566","null","null"));
+//        arrayListUsers.add(new UserProfile("Ulaş","Akpınar","ulas.akpinar@gmail.com","181818","5345556677","null","null"));
+//        arrayListUsers.add(new UserProfile("Melike","Türkmen","melike.turkmen@gmail.com","191919","5356667788","null","null"));
+//        arrayListUsers.add(new UserProfile("Erdem","Sarı","erdem.sari@gmail.com","202020","5367778899","null","null"));
+//        arrayListUsers.add(new UserProfile("Aylin","Şentürk","aylin.senturk@gmail.com","212121","5378889900","null","null"));
+//        arrayListUsers.add(new UserProfile("Gürkan","Yıldız","gurkan.yildiz@gmail.com","222222","5389990011","null","null"));
+//        arrayListUsers.add(new UserProfile("İpek","Ersoy","ipek.ersoy@gmail.com","232323","5391112234","null","null"));
+//        arrayListUsers.add(new UserProfile("Volkan","Kaya","volkan.kaya@gmail.com","242424","5302223345","null","null"));
+//        arrayListUsers.add(new UserProfile("Damla","Şahin","damla.sahin@gmail.com","252525","5313334456","null","null"));
+//        arrayListUsers.add(new UserProfile("Çağrı","Deniz","cagri.deniz@gmail.com","262626","5324445567","null","null"));
+//        arrayListUsers.add(new UserProfile("Sibel","Uzun","sibel.uzun@gmail.com","272727","5335556678","null","null"));
 
 
     }
@@ -304,15 +265,13 @@ public class MainActivity extends AppCompatActivity  {
 
     public void skip(View view){
 
-        if (selectUser == null){
-            //giriş ve kayıt
-            Intent intent = new Intent(this,LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-        }else {
-            //commityyyyyyyyyyyyyyyy
-        }
+
+        //giriş ve kayıt
+        Intent intent = new Intent(this,LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+
 
 
     }
