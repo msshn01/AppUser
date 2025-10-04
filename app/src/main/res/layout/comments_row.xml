@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginLeft="18dp"
+    android:layout_marginRight="18dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/style_comment_row">
+
+
+    <ImageView
+        android:id="@+id/imageBuyer"
+        android:layout_width="194dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:srcCompat="@drawable/chat" />
+
+
+    <LinearLayout
+        android:layout_width="355dp"
+        android:layout_height="80dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/buyerEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="sahanmusa29@mail.com"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText"></TextView>
+
+        <TextView
+            android:id="@+id/commentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="Aldığım hizmete göre fiyat performası gayet memnunum güvenle tercih edebilirsiniz"
+            android:textSize="13dp"
+            tools:ignore="HardcodedText"></TextView>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
